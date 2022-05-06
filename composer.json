@@ -11,7 +11,8 @@
         "laravel/jetstream": "^2.7",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.5"
+        "livewire/livewire": "^2.5",
+        "mxwebdev/blade-components": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -20,6 +21,15 @@
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
+    },
+    "repositories": {
+        "blade-components": {
+            "type": "path",
+            "url": "/Users/maxwoerner/Development/packages/mxwebdev/blade-components",
+            "options": {
+                "symlink": true
+            }
+        }
     },
     "autoload": {
         "psr-4": {
