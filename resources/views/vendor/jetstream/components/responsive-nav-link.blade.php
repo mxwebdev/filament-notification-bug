@@ -1,11 +1,16 @@
-@props(['active'])
+@props(['icon', 'active'])
 
 @php
 $classes = ($active ?? false)
-            ? 'block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition'
-            : 'block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition';
+? 'bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md'
+: 'text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md';
+
+$iconClasses = ($active ?? false)
+? 'text-gray-300 mr-4 flex-shrink-0 h-6 w-6'
+: 'text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6';
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>
+    <x-dynamic-component :component="$icon" class="{{ $iconClasses }}" />
     {{ $slot }}
 </a>
