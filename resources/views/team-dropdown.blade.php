@@ -3,7 +3,7 @@
 
     <x-jet-dropdown align="full" width="full">
         <x-slot name="trigger">
-            <button x-on:click="showTeamDropdown =! showTeamDropdown" type="button"
+            <button type="button"
                     class="group w-full bg-gray-800 rounded-md px-3.5 py-2 text-sm text-left font-medium
                                 text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     id="options-menu-button" aria-expanded="false" aria-haspopup="true">
