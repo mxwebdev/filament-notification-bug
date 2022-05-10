@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GigResponseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -29,5 +26,14 @@ Route::middleware([
     Route::get('/gigs/{gig}', function () {
         return view ('gigs.show');
     })->name('gigs.show');
+
+    // Gig Responses
+    Route::get('/gig-response/accept/{gigResponse}', [GigResponseController::class, 'accept'])
+        ->middleware(['signed'])
+        ->name('gig-responses.accept');
+        
+    Route::get('/gig-responses/decline/{gigResponse}', [GigResponseController::class, 'decline'])
+        ->middleware(['signed'])
+        ->name('gig-responses.decline');
     
 });

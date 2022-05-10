@@ -19,7 +19,7 @@ class CreateGigResponsesTable extends Migration
             $table->timestamps();
 
             $table->integer('status')->default(GigResponse::STATUS_PENDING);
-            $table->dateTime('response_time')->nullable();
+            $table->dateTime('responded_at')->nullable();
             $table->string('comment')->nullable();
             
             $table->foreignID('user_id');

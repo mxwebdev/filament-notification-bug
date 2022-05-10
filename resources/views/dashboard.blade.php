@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Dashboard') }}
+        {{ auth()->user()->currentTeam->name }}
     </x-slot>
 
     @livewire('gig-calendar')

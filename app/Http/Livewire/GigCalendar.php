@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use Carbon\Carbon;
 use App\Models\Gig;
-use App\Models\GigResponse;
-use App\Models\User;
 use Livewire\Component;
 use Carbon\CarbonPeriod;
+use App\Events\GigCreated;
+use App\Mail\GigResponseRequest;
+use App\Models\GigResponse;
+use Illuminate\Support\Facades\Mail;
 
 class GigCalendar extends Component
 {
@@ -78,8 +80,21 @@ class GigCalendar extends Component
         $this->editing->save();
 
         foreach ($this->invitedUsers as $user_id) {
-            $this->editing->gigResponses()->create(['user_id' => $user_id]);
+
+            if ($this->editing->creator->id === $user_id) {
+                $this->editing->gigResponses()->create([
+                    'user_id' => $user_id, 
+                    'status' => GigResponse::STATUS_ACCEPTED,
+                    'responded_at' => Carbon::now(),
+                ]);
+            }
+            else {
+                $this->editing->gigResponses()->create(['user_id' => $user_id]);
+            }
+
         }
+
+        GigCreated::dispatch($this->editing);
 
         $this->showSlideOver = false;
         $this->editing = $this->makeBlankGig();

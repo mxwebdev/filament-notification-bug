@@ -12,6 +12,8 @@ class GigResponse extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $with = ['gig'];
+
     const STATUS_PENDING = 0;
     const STATUS_ACCEPTED = 1;
     const STATUS_DECLINED = 2;
@@ -19,7 +21,7 @@ class GigResponse extends Model
 
     protected $casts = [
         'status' => 'integer',
-        'responseTime' => 'immutable_datetime',
+        'responded_at' => 'immutable_datetime',
     ];
 
     public function gig(): BelongsTo

@@ -122,7 +122,7 @@
                                         <div class="flex overflow-hidden -space-x-1">
 
                                             @foreach ($gig->gigResponses as $gigResponse)
-                                            <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                                            <img class="inline-block h-9 w-9 rounded-full ring-2 ring-white"
                                                  src="{{ $gigResponse->user->profile_photo_url }}"
                                                  alt="{{ $gigResponse->user->name }}">
                                             @endforeach

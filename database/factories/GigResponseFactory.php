@@ -31,7 +31,7 @@ class GigResponseFactory extends Factory
                 GigResponse::STATUS_DECLINED, 
                 GigResponse::STATUS_TENTATIVE
             ]),
-            'response_time' => Carbon::now(),
+            'responded_at' => Carbon::now(),
             'comment' => $this->faker->paragraph,
             'gig_id' => Gig::factory(),
             'user_id' => User::factory(),
