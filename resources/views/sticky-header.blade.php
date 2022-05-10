@@ -30,7 +30,7 @@
                 <div class="ml-3 relative">
                     <x-jet-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button x-on:click="showProfileDropdown =! showProfileDropdown" type="button"
+                            <button type="button"
                                     class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">{{ __('Open user menu') }}</span>

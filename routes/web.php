@@ -25,4 +25,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/gigs/{gig}', function () {
+        return view ('gigs.show');
+    })->name('gigs.show');
+    
 });
