@@ -94,7 +94,11 @@ class GigCalendar extends Component
         $rangeEnd = $rangeEnd->isSunday() ? $rangeEnd : $rangeEnd->addMonthNoOverflow()->firstOfMonth(0);
         
         $this->selectedDateRange = CarbonPeriod::create($rangeStart, $rangeEnd)->toArray();
-        $this->gigs = auth()->user()->currentTeam->gigs()->whereDate('gig_start', '>=', $this->selectedDate)->orderBy('gig_start')->get();
+        $this->gigs = auth()->user()->currentTeam->gigs()
+                        ->whereDate('gig_start', '>=', $this->selectedDate)
+                        ->orderBy('gig_start')
+                        ->with('creator', 'gigResponses')
+                        ->get();
         
         return view('livewire.gig-calendar');
     }
