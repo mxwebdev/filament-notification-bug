@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Carbon\Carbon;
 use App\Models\Gig;
 use Livewire\Component;
-use App\Events\GigCreated;
 use App\Models\GigResponse;
 
 class UpcomingGigs extends Component
@@ -85,8 +84,6 @@ class UpcomingGigs extends Component
             }
 
         }
-
-        GigCreated::dispatch($this->editing);
 
         $this->closeSlideOver();
     }

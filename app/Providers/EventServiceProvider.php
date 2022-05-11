@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\GigCreated;
-use App\Listeners\SendGigResponseRequestEmail;
+use App\Models\GigResponse;
+use App\Observers\GigResponseObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,10 +19,16 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-        ],
-        GigCreated::class => [
-            SendGigResponseRequestEmail::class,
         ]
+    ];
+
+    /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        GigResponse::class => [GigResponseObserver::class],
     ];
 
     /**
