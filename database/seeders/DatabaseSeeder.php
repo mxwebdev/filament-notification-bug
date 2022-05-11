@@ -28,8 +28,11 @@ class DatabaseSeeder extends Seeder
 
         $team = Team::factory()->create(['name' => 'TOTO and the Kids']);
 
-        $team->users()->save($user);
-        $team->users()->saveMany($users);
+        $team->users()->save($user, ['role' => 'admin']);
+
+        foreach($users as $user) {
+            $team->users()->save($user, ['role' => 'editor']);
+        }
         
         // $gigs = Gig::factory(5)->for($user->currentTeam)->create();
 
