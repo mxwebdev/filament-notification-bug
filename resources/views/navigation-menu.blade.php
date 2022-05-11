@@ -52,10 +52,10 @@
                                                    :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-jet-responsive-nav-link>
-                        <x-jet-responsive-nav-link href="#"
-                                                   icon="icon.solid.check"
+                        <x-jet-responsive-nav-link href="{{ route('gigs.index') }}"
+                                                   icon="icon.outline.ticket"
                                                    :active="request()->routeIs('das')">
-                            {{ __('Tea') }}
+                            {{ __('Gigs') }}
                         </x-jet-responsive-nav-link>
 
                     </nav>
@@ -88,10 +88,10 @@
                                     :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="#"
-                                    icon="icon.solid.check"
+                    <x-jet-nav-link href="{{ route('gigs.index') }}"
+                                    icon="icon.outline.ticket"
                                     :active="request()->routeIs('das')">
-                        {{ __('Tea') }}
+                        {{ __('Gigs') }}
                     </x-jet-nav-link>
 
                 </nav>

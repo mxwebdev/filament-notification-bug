@@ -5,21 +5,18 @@ namespace App\Http\Livewire;
 use Carbon\Carbon;
 use App\Models\Gig;
 use Livewire\Component;
-use Carbon\CarbonPeriod;
 use App\Events\GigCreated;
-use App\Mail\GigResponseRequest;
 use App\Models\GigResponse;
-use Illuminate\Support\Facades\Mail;
 
-class GigCalendar extends Component
+class UpcomingGigs extends Component
 {
-    public $selectedDate;
-    public $selectedDateRange;
     public $gigs;
     public Gig $editing;
     public $invitedUsers = [];
 
     public $showSlideOver = false;
+
+    protected $listeners = ['openCreateGigSlideOver' => 'openSlideOver'];
 
     public function rules() {
         return [
@@ -33,32 +30,27 @@ class GigCalendar extends Component
 
     public function mount()
     {
-        $this->selectedDate = Carbon::now();
-
         $this->editing = $this->makeBlankGig();
+    }
+
+    public function openSlideOver()
+    {
+        $this->showSlideOver = true;
+    }
+
+    public function closeSlideOver()
+    {
+        $this->showSlideOver = false;
+        $this->editing = $this->makeBlankGig();
+        $this->invitedUsers = [];
     }
 
     public function makeBlankGig()
     {
         return Gig::make([
             'status' => 0,
-            'gig_start' => $this->selectedDate->format('Y-m-d'),
+            'gig_start' => Carbon::now()->format('Y-m-d'),
         ]);
-    }
-    
-    public function setSelectedDate(String $date)
-    {
-        $this->selectedDate = Carbon::parse($date);
-    }
-    
-    public function nextMonth()
-    {
-        $this->selectedDate->addMonthNoOverflow();
-    }
-    
-    public function prevMonth()
-    {
-        $this->selectedDate->subMonthNoOverflow();
     }
 
     public function toggleInvitedUser($user_id)
@@ -96,25 +88,16 @@ class GigCalendar extends Component
 
         GigCreated::dispatch($this->editing);
 
-        $this->showSlideOver = false;
-        $this->editing = $this->makeBlankGig();
+        $this->closeSlideOver();
     }
     
     public function render()
     {
-        $rangeStart = Carbon::create($this->selectedDate)->startOfMonth();
-        $rangeStart = $rangeStart->isMonday() ? $rangeStart : $rangeStart->subMonthNoOverflow()->lastOfMonth(1);
-        
-        $rangeEnd = Carbon::create($this->selectedDate)->endOfMonth();
-        $rangeEnd = $rangeEnd->isSunday() ? $rangeEnd : $rangeEnd->addMonthNoOverflow()->firstOfMonth(0);
-        
-        $this->selectedDateRange = CarbonPeriod::create($rangeStart, $rangeEnd)->toArray();
         $this->gigs = auth()->user()->currentTeam->gigs()
-                        ->whereDate('gig_start', '>=', $this->selectedDate)
                         ->orderBy('gig_start')
                         ->with('creator', 'gigResponses')
                         ->get();
         
-        return view('livewire.gig-calendar');
+        return view('livewire.upcoming-gigs');
     }
 }
