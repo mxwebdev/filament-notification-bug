@@ -87,6 +87,8 @@ class UpcomingGigs extends Component
         }
 
         $this->closeSlideOver();
+
+        $this->emit('refresh-activity-timeline');
     }
     
     public function render()

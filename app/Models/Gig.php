@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +18,7 @@ class Gig extends Model
 
     use HasFactory;
     use SoftDeletes;
+    use LogsActivity;
     // use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     const STATUS_OPEN = 0;
@@ -31,6 +35,14 @@ class Gig extends Model
         'fee' => 'integer',
         'status' => 'integer',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->setDescriptionForEvent(fn(string $eventName) => "gig_{$eventName}")
+            ->useLogName($this->team->id);
+    }
 
     public function team(): BelongsTo
     {

@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +14,7 @@ class GigResponse extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use LogsActivity;
 
     protected $with = ['gig'];
 
@@ -23,6 +27,16 @@ class GigResponse extends Model
         'status' => 'integer',
         'responded_at' => 'immutable_datetime',
     ];
+
+    protected static $recordEvents = ['updated'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->setDescriptionForEvent(fn(string $eventName) => "gig_response_{$eventName}")
+            ->useLogName($this->gig->team->id);
+    }
 
     public function gig(): BelongsTo
     {
