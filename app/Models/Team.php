@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasTeamPhoto;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Team extends JetstreamTeam
 {
     use HasFactory;
+    use HasTeamPhoto;
 
     /**
      * The attributes that should be cast.

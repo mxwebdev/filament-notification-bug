@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         $users = User::factory(6)->withPersonalTeam()->create();
 
-        $team = Team::factory()->create(['name' => 'TOTO and the Kids']);
+        $team = Team::factory()->create(['name' => 'TOTO and the Kids', 'user_id' => $user->id]);
 
         $team->users()->save($user, ['role' => 'admin']);
 

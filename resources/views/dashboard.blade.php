@@ -12,8 +12,8 @@
             <div class="flex-shrink-0">
                 <div class="relative">
                     <img class="h-16 w-16 rounded-full"
-                         src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-                         alt="">
+                         src="{{ auth()->user()->currentTeam->team_photo_url }}"
+                         alt="{{ auth()->user()->currentTeam->name }}">
                     <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
                 </div>
             </div>
@@ -25,9 +25,12 @@
         <div
              class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
 
-            <x-button.secondary-leading-icon class="items-center justify-center" icon="icon.outline.cog"
-                                             color="blue">{{ __('Team Settings') }}
-            </x-button.secondary-leading-icon>
+            <form action="{{ route('teams.show', ['team' => auth()->user()->currentTeam->id]) }}">
+                <x-button.secondary-leading-icon type="submit" class="items-center justify-center"
+                                                 icon="icon.outline.cog"
+                                                 color="blue">{{ __('Team Settings') }}
+                </x-button.secondary-leading-icon>
+            </form>
 
             <x-button.primary-leading-icon class="items-center justify-center"
                                            onclick="window.livewire.emit('openCreateGigSlideOver')"
