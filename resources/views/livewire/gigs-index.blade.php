@@ -1,6 +1,13 @@
 <div>
     <ul role="list" class="divide-y divide-gray-200">
 
+        <li>
+            <a href="#"
+               class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-3 hover:text-gray-700 sm:rounded-b-lg">
+                {{ __('...') }}
+            </a>
+        </li>
+
         @foreach ($gigs as $gig)
 
         <li>
@@ -69,14 +76,9 @@
 
         @endforeach
 
-        <li>
-            <a href="{{ route('gigs.index') }}"
-               class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-3 hover:text-gray-700 sm:rounded-b-lg">
-                {{ __('Show all :count upcoming gigs...', ['count' => $upcomingGigsCount]) }}
-            </a>
-        </li>
-
     </ul>
+
+    {{ $gigs->links('pagination') }}
 
     <form wire:submit.prevent="save">
         <x-modal.slideover>

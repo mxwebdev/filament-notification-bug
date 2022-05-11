@@ -1,12 +1,4 @@
 <x-app-layout>
-    {{-- <x-slot name="header">
-        {{ auth()->user()->currentTeam->name }}
-    </x-slot> --}}
-
-    {{-- @livewire('gig-calendar') --}}
-
-    <!-- Page header -->
-
     <x-slot:header>
         <div class="flex items-center space-x-5">
             <div class="flex-shrink-0">
@@ -75,7 +67,8 @@
                         <div class="px-4 py-5 sm:px-6">
                             <h2 id="upcoming-gigs-title" class="text-lg font-medium text-gray-900">
                                 {{ __('Next Gigs') }}</h2>
-                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Get ready for your upcoming gigs.</p>
+                            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                                {{ __('Get ready for your upcoming gigs.') }}</p>
                         </div>
 
                         <div class="bg-white shadow overflow-hidden">

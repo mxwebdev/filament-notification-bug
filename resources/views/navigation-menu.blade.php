@@ -54,7 +54,7 @@
                         </x-jet-responsive-nav-link>
                         <x-jet-responsive-nav-link href="{{ route('gigs.index') }}"
                                                    icon="icon.outline.ticket"
-                                                   :active="request()->routeIs('das')">
+                                                   :active="request()->routeIs('gigs.*')">
                             {{ __('Gigs') }}
                         </x-jet-responsive-nav-link>
 
@@ -90,7 +90,7 @@
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('gigs.index') }}"
                                     icon="icon.outline.ticket"
-                                    :active="request()->routeIs('das')">
+                                    :active="request()->routeIs('gigs.*')">
                         {{ __('Gigs') }}
                     </x-jet-nav-link>
 
