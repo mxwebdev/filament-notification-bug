@@ -12,6 +12,7 @@ class UpcomingGigs extends Component
     public $gigs;
     public Gig $editing;
     public $invitedUsers = [];
+    public $upcomingGigsCount;
 
     public $showSlideOver = false;
 
@@ -91,9 +92,15 @@ class UpcomingGigs extends Component
     public function render()
     {
         $this->gigs = auth()->user()->currentTeam->gigs()
-                        ->orderBy('gig_start')
-                        ->with('creator', 'gigResponses')
-                        ->get();
+            ->whereDate('gig_start', '>=', Carbon::now())
+            ->orderBy('gig_start')
+            ->with('creator', 'gigResponses')
+            ->limit(5)
+            ->get();
+
+        $this->upcomingGigsCount = auth()->user()->currentTeam->gigs()
+            ->whereDate('gig_start', '>=', Carbon::now())
+            ->count();
         
         return view('livewire.upcoming-gigs');
     }

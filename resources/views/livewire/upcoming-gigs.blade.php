@@ -72,7 +72,7 @@
         <li>
             <a href="{{ route('gigs.index') }}"
                class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">
-                {{ __('Show all gigs') }}
+                {{ __('Show all :count upcoming gigs', ['count' => $upcomingGigsCount]) }}
             </a>
         </li>
 
