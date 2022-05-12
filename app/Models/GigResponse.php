@@ -23,6 +23,13 @@ class GigResponse extends Model
     const STATUS_DECLINED = 2;
     const STATUS_TENTATIVE = 3;
 
+    const STATUS = [
+        self::STATUS_PENDING,
+        self::STATUS_ACCEPTED,
+        self::STATUS_DECLINED,
+        self::STATUS_TENTATIVE,
+    ];
+
     protected $casts = [
         'status' => 'integer',
         'responded_at' => 'immutable_datetime',

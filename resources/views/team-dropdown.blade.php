@@ -9,9 +9,15 @@
                     id="options-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="flex w-full justify-between items-center">
                     <span class="flex min-w-0 items-center justify-between space-x-3">
+                        @if (auth()->user()->currentTeam->personal_team)
                         <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
-                             src="{{ Auth::user()->currentTeam->team_photo_url }}"
-                             alt="{{ Auth::user()->currentTeam->name }}">
+                             src="{{ auth()->user()->profile_photo_url }}"
+                             alt="{{ auth()->user()->name }}">
+                        @else
+                        <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
+                             src="{{ auth()->user()->currentTeam->team_photo_url }}"
+                             alt="{{ auth()->user()->currentTeam->name }}">
+                        @endif
                         <span class="flex-1 flex flex-col min-w-0">
                             <span
                                   class="text-gray-300 text-sm font-medium truncate">{{ Auth::user()->currentTeam->name }}</span>

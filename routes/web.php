@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\GigResponseController;
+use App\Models\Gig;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GigResponseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/gigs/{gig}', function () {
-        return view ('gigs.show');
+    Route::get('/gigs/{gig}', function (Gig $gig) {
+        return view ('gigs.show', ['gig' => $gig]);
     })->name('gigs.show');
 
     Route::get('/gigs', function () {
@@ -39,5 +40,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/gig-responses/decline/{gigResponse}', [GigResponseController::class, 'decline'])
         ->middleware(['signed'])
         ->name('gig-responses.decline');
+
+    Route::put('/gig-responses/update', [GigResponseController::class, 'update'])
+        ->name('gig-responses.update');
     
 });

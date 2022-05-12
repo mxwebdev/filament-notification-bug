@@ -27,18 +27,19 @@
 
             @livewire('sticky-header')
 
-            <main class="py-10">
-
-                <!-- Page Heading -->
-                @if (isset($header))
-                <div
-                     class="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
-                    {{ $header }}
+            <main class="flex-1">
+                <div class="py-8">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                        <!-- Page Header -->
+                        @if (isset($header))
+                        {{ $header }}
+                        @endif
+                    </div>
+                    <div class="mt-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                        <!-- Page Content -->
+                        {{ $slot }}
+                    </div>
                 </div>
-                @endif
-
-                {{ $slot }}
-
             </main>
 
         </div>

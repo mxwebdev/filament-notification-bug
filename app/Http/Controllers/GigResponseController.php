@@ -39,4 +39,21 @@ class GigResponseController extends Controller
 
         return redirect(route('gigs.show', ['gig' => $gigResponse->gig->id]));
     }
+
+    /**
+     * Update the authenticated user's gig response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request)
+    {
+        $gigResponse = GigResponse::findOrFail($request->gig_response_id);
+
+        $gigResponse->status = $request->new_status;
+        $gigResponse->responded_at = Carbon::now();
+        $gigResponse->save();
+
+        return redirect(route('gigs.show', $gigResponse->gig->id), 303);
+    }
 }
