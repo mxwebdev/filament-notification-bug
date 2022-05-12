@@ -29,6 +29,11 @@ class Gig extends Model
         self::STATUS_CONFIRMED => 'Confirmed',
     ];
 
+    const STATUS_COLOR = [
+        self::STATUS_OPEN => 'yellow',
+        self::STATUS_CONFIRMED => 'green',
+    ];
+
     protected $casts = [
         'gig_start' => 'date:Y-m-d',
         'gig_end' => 'date:Y-m-d',

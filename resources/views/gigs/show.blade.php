@@ -1,7 +1,16 @@
 <x-app-layout>
     <x-slot:header>
-        <x-page-header.simple :title="$gig->name">
+        <x-page-header.simple>
+            <x-slot:title>
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                    {{ $gig->name }}
+                    <x-badge.sm class="ml-2 align-middle" color="{{ App\Models\Gig::STATUS_COLOR[$gig->status] }}">
+                        {{ App\Models\Gig::STATUS[$gig->status] }}</x-badge.sm>
+                </h2>
+            </x-slot:title>
+
             <x-slot:subtitle>
+
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                     <x-icon.outline.location-marker class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                     {{ $gig->location }}

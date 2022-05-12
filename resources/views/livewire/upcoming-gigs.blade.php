@@ -10,8 +10,10 @@
                         <div class="truncate">
                             <div class="flex text-sm">
                                 <p class="font-medium text-blue-700 truncate">{{ $gig->name }}</p>
-                                <p class="ml-1.5 flex-shrink-0 font-normal text-gray-400">{{ __('created by') }}
-                                    {{ $gig->creator->name }}</p>
+                                {{-- <p class="ml-1.5 flex-shrink-0 font-normal text-gray-400">{{ __('created by') }}
+                                {{ $gig->creator->name }}</p> --}}
+                                <x-badge.xs class="ml-2" color="{{ App\Models\Gig::STATUS_COLOR[$gig->status] }}">
+                                    {{ App\Models\Gig::STATUS[$gig->status] }}</x-badge.xs>
                             </div>
                             <div class="mt-2 flex">
                                 <div class="flex items-center text-sm text-gray-500">

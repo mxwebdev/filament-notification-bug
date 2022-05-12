@@ -1,7 +1,10 @@
 <x-app-layout>
 
     <x-slot:header>
-        <x-page-header.simple title="{{ __('Gigs') }}">
+        <x-page-header.simple>
+            <x-slot:title>
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">{{ __('Gigs') }}</h2>
+            </x-slot:title>
             <x-slot:subtitle>
                 <p class="mt-2 text-sm text-gray-500">{{ __('Get ready for your upcoming gigs.') }}
                 </p>
