@@ -22,7 +22,8 @@
             </x-slot:subtitle>
             <x-slot:action>
                 <div class="flex space-x-4">
-                    <x-button.secondary-leading-icon icon="icon.solid.pencil"
+                    <x-button.secondary-leading-icon onclick="window.livewire.emit('openEditGigSlideOver')"
+                                                     icon="icon.solid.pencil"
                                                      color="blue">{{ __('Edit Gig') }}
                     </x-button.secondary-leading-icon>
 
@@ -76,7 +77,7 @@
             <!-- Line Up -->
             <x-card label="line-up-title">
                 <div class="px-4 py-5 sm:px-6">
-                    <h2 class="text-lg font-medium text-gray-900">{{ __('Gig Line Up') }}</h2>
+                    <h2 class="text-lg font-medium text-gray-900">{{ __('Line Up') }}</h2>
 
                     <div class="mt-6 grid grid-cols-4 lg:grid-cols-6 gap-4 md:py-3">
                         @foreach ($gig->gigResponses as $gigResponse)
@@ -118,7 +119,7 @@
                         @endforeach
 
                         <!-- Empty State -->
-                        <div class="flex flex-col items-center">
+                        {{-- <div class="flex flex-col items-center">
                             <span class="inline-block relative">
                                 <div
                                      class="h-12 w-12 md:h-14 md:w-14 rounded-full border-2 border-gray-300
@@ -126,15 +127,17 @@
                                     <x-icon.solid.plus class="h-8 w-8" />
                                 </div>
                             </span>
-                            {{-- <div class="hidden sm:flex mt-2">
+                            <div class="hidden sm:flex mt-2">
                                 <p class="text-sm font-medium text-center text-gray-700 group-hover:text-gray-900">
                                     {{ __('Invite') }}</p>
-                        </div> --}}
-                    </div>
+                    </div> --}}
                 </div>
-
         </div>
-        </x-card>
+
     </div>
+    </x-card>
     </div>
+
+    @livewire('gigs-edit', ['gig' => $gig])
+
 </x-app-layout>
