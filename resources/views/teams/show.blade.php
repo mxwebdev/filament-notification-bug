@@ -14,7 +14,9 @@
 
             @livewire('teams.update-team-name-form', ['team' => $team])
 
+            @if (! $team->personal_team)
             @livewire('teams.team-member-manager', ['team' => $team])
+            @endif
 
             @if (Gate::check('delete', $team) && ! $team->personal_team)
             <x-jet-section-border />

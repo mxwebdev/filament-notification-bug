@@ -1,7 +1,7 @@
 <div>
     <ul role="list" class="divide-y divide-gray-200">
 
-        @foreach ($gigs as $gig)
+        @forelse ($gigs as $gig)
 
         <li>
             <a href="{{ route('gigs.show', $gig) }}" class="block hover:bg-gray-50">
@@ -69,14 +69,34 @@
             </a>
         </li>
 
-        @endforeach
-
         <li>
             <a href="{{ route('gigs.index') }}"
                class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-3 hover:text-gray-700 sm:rounded-b-lg">
                 {{ __('Show all :count upcoming gigs...', ['count' => $upcomingGigsCount]) }}
             </a>
         </li>
+
+        @empty
+
+        <li>
+            <div class="px-4 py-4 sm:px-6 text-center">
+                <p>
+                    <span class="text-sm font-medium text-gray-700">
+                        {{ __('Nothing scheduled yet.') }}
+                    </span>
+                    <span class="text-sm text-gray-500">
+                        {{ __('Get started and') }}
+
+                        <a wire:click="openSlideOver" href="#"
+                           class="font-medium text-blue-600 hover:text-blue-700">{{ __('add your first gig') }}</a>
+                        .
+                    </span>
+                </p>
+
+            </div>
+        </li>
+
+        @endforelse
 
     </ul>
 

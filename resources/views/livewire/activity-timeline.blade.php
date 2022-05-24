@@ -1,9 +1,8 @@
-<!-- Activity Feed -->
 <div>
     <div class="mt-6 flow-root">
         <ul role="list" class="-mb-8">
 
-            @foreach ($activities as $activity)
+            @forelse ($activities as $activity)
 
             @php
             if (is_null(App\Models\User::find($activity->causer_id))) {
@@ -24,7 +23,9 @@
                                                       :changes="$activity->changes" :causer_name="$causer_name" />
             @endif
 
-            @endforeach
+            @empty
+            <x-timeline-activity.empty :lastItem="true" />
+            @endforelse
 
         </ul>
     </div>

@@ -140,6 +140,20 @@
                                 <p class="text-sm font-medium text-center text-gray-700 group-hover:text-gray-900">
                                     {{ __('Invite') }}</p>
                     </div> --}}
+                    <a onclick="window.livewire.emit('openEditGigSlideOver')"
+                       href="#" class="group">
+                        <div class="flex flex-col items-center">
+                            <div
+                                 class="flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-full  border-2 border-gray-300 group-hover:border-gray-400 border-dashed cursor-pointer">
+                                <x-icon.solid.plus
+                                                   class="h-10 w-10 text-gray-300 group-hover:text-gray-400" />
+                            </div>
+                            <div class="hidden sm:flex mt-2">
+                                <p class="text-sm font-medium text-center text-gray-400 group-hover:text-gray-500">
+                                    {{ __('Invite Member') }}</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
         </div>
 

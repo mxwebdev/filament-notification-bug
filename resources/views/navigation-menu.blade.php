@@ -47,6 +47,7 @@
                 <div class="mt-5 flex-1 h-0 overflow-y-auto">
                     <nav class="px-2 space-y-1">
 
+                        @unless (auth()->user()->currentTeam->personal_team)
                         <x-jet-responsive-nav-link href="{{ route('dashboard') }}"
                                                    icon="icon.outline.home"
                                                    :active="request()->routeIs('dashboard')">
@@ -57,6 +58,7 @@
                                                    :active="request()->routeIs('gigs.*')">
                             {{ __('Gigs') }}
                         </x-jet-responsive-nav-link>
+                        @endunless
 
                     </nav>
                 </div>
@@ -72,10 +74,10 @@
     <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex-1 flex flex-col min-h-0 bg-gradient-to-b from-gray-800 to-gray-700">
-            <div class="flex items-center h-16 flex-shrink-0 px-4">
-                <img class="h-8 w-auto"
-                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                     alt="Workflow">
+            <div class="flex items-center h-18 flex-shrink-0 px-4">
+                <img class="h-18 w-auto"
+                     src="{{ url('/img/gigtune-logo-white.png') }}"
+                     alt="gigtune">
             </div>
 
             @livewire('team-dropdown')
@@ -83,6 +85,7 @@
             <div class="flex-1 flex flex-col overflow-y-auto">
                 <nav class="flex-1 px-2 py-4 space-y-1">
 
+                    @unless (auth()->user()->currentTeam->personal_team)
                     <x-jet-nav-link href="{{ route('dashboard') }}"
                                     icon="icon.outline.home"
                                     :active="request()->routeIs('dashboard')">
@@ -93,6 +96,7 @@
                                     :active="request()->routeIs('gigs.*')">
                         {{ __('Gigs') }}
                     </x-jet-nav-link>
+                    @endunless
 
                 </nav>
             </div>

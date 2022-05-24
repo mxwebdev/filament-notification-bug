@@ -1,10 +1,10 @@
 <x-jet-form-section submit="updateTeamPhoto">
     <x-slot name="title">
-        {{ __('Team Name') }}
+        {{ __('Team Photo') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('The team\'s name and owner information.') }}
+        {{ __('The team\'s photo.') }}
     </x-slot>
 
     <x-slot name="form">

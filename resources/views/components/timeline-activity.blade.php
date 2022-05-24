@@ -23,9 +23,13 @@
                         {{ $slot }}
                     </p>
                 </div>
+
+                @if (isset($date))
                 <div class="text-right text-sm whitespace-nowrap text-gray-500">
                     <time datetime="{{ $date->format('Y-m-d') }}">{{ $date->format('M j') }}</time>
                 </div>
+                @endif
+
             </div>
         </div>
     </div>
