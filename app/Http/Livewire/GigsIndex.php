@@ -89,6 +89,11 @@ class GigsIndex extends Component
         }
 
         $this->closeSlideOver();
+
+        $this->dispatchBrowserEvent('banner-message', [
+            'style' => 'success',
+            'message' => __('Gig saved!')
+        ]);
     }
     
     public function render()

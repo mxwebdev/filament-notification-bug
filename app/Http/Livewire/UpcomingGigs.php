@@ -89,6 +89,12 @@ class UpcomingGigs extends Component
         $this->closeSlideOver();
 
         $this->emitTo('activity-timeline', 'refresh-activity-timeline');
+
+        $this->dispatchBrowserEvent('banner-message', [
+            'style' => 'success',
+            'message' => __('Gig saved!')
+        ]);
+
     }
     
     public function render()

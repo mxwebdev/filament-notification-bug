@@ -69,13 +69,6 @@
             </a>
         </li>
 
-        <li>
-            <a href="{{ route('gigs.index') }}"
-               class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-3 hover:text-gray-700 sm:rounded-b-lg">
-                {{ __('Show all :count upcoming gigs...', ['count' => $upcomingGigsCount]) }}
-            </a>
-        </li>
-
         @empty
 
         <li>
@@ -97,6 +90,15 @@
         </li>
 
         @endforelse
+
+        @if ($gigs->count() > 0)
+        <li>
+            <a href="{{ route('gigs.index') }}"
+               class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-3 hover:text-gray-700 sm:rounded-b-lg">
+                {{ __('Show all :count upcoming gigs...', ['count' => $upcomingGigsCount]) }}
+            </a>
+        </li>
+        @endif
 
     </ul>
 
