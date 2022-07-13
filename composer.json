@@ -12,7 +12,7 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.5",
-        "mxwebdev/blade-components": "@dev",
+        "mxwebdev/blade-components": "dev-main",
         "spatie/laravel-activitylog": "^4.5"
     },
     "require-dev": {
@@ -27,7 +27,7 @@
     "repositories": {
         "blade-components": {
             "type": "path",
-            "url": "/Users/maxwoerner/Development/packages/mxwebdev/blade-components",
+            "url": "/Users/maxwoerner/dev/packages/mxwebdev/blade-components",
             "options": {
                 "symlink": true
             }
