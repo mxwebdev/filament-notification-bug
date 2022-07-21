@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-// use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 class Gig extends Model
 {
@@ -19,7 +18,7 @@ class Gig extends Model
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-    // use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     const STATUS_OPEN = 0;
     const STATUS_CONFIRMED = 1;
@@ -59,15 +58,15 @@ class Gig extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // public function sets(): HasMany
-    // {
-    //     return $this->hasMany(Set::class)->orderBy('position');
-    // }
+    public function sets(): HasMany
+    {
+        return $this->hasMany(Set::class)->orderBy('position');
+    }
 
-    // public function songs(): HasManyDeep
-    // {
-    //     return $this->hasManyDeep(Song::class, [Set::class, 'set_song']);
-    // }
+    public function songs(): HasManyDeep
+    {
+        return $this->hasManyDeep(Song::class, [Set::class, 'set_song']);
+    }
 
     public function gigResponses(): HasMany
     {

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Gig;
+use App\Models\Set;
+use App\Models\Song;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\GigResponse;
@@ -36,11 +38,21 @@ class DatabaseSeeder extends Seeder
         
         $gigs = Gig::factory(25)->for($team)->create(['created_by' => $user->id]);
 
-        // foreach ($gigs as $gig) {
-        //     GigResponse::factory()->for($gig)->create([
-        //         'user_id' => random_int(1, 6)
-        //     ]);
-        // }
+        $songs = Song::factory(10)->for($team)->create();
+
+        foreach ($gigs as $gig) {
+            // GigResponse::factory()->for($gig)->create([
+            //     'user_id' => random_int(1, 6)
+            // ]);
+
+            $set = Set::factory()->for($gig)->create();
+
+            $set->songs()->attach(
+                $songs->random(rand(4, 6))->pluck('id')->toArray()
+            );
+
+            
+        }
 
     }
 }

@@ -45,13 +45,13 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    /**
-     * Get all of the gigs for the Team
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function gigs(): HasMany
     {
         return $this->hasMany(Gig::class);
+    }
+
+    public function songs(): HasMany
+    {
+        return $this->hasMany(Song::class)->orderBy('title');
     }
 }

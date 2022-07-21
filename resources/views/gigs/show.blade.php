@@ -10,7 +10,6 @@
             </x-slot:title>
 
             <x-slot:subtitle>
-
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                     <x-icon.outline.location-marker class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                     {{ $gig->location }}
@@ -27,8 +26,8 @@
                     {{ number_format($gig->fee, 0, ',', '.') }}
                 </div>
                 @endif
-
             </x-slot:subtitle>
+
             <x-slot:action>
                 <div class="flex space-x-4">
                     <x-button.secondary-leading-icon onclick="window.livewire.emit('openEditGigSlideOver')"
@@ -74,15 +73,15 @@
                         </x-slot>
                     </x-jet-dropdown>
                     @endif
-
                 </div>
-
             </x-slot:action>
+
         </x-page-header.simple>
     </x-slot:header>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3">
         <div class="space-y-6 lg:col-start-1 lg:col-span-3">
+
             <!-- Line Up -->
             <x-card label="line-up-title">
                 <div class="px-4 py-5 sm:px-6">
@@ -155,10 +154,19 @@
                         </div>
                     </a>
                 </div>
-        </div>
+            </x-card>
 
-    </div>
-    </x-card>
+            <!-- Setlist -->
+            <x-card label="setlist-title">
+                <div class="px-4 py-5 sm:px-6">
+                    <h2 class="text-lg font-medium text-gray-900">{{ __('Setlist') }}</h2>
+                    <a href="{{ route('setlists.show', ['gig' => $gig->id]) }}">
+                        LINK
+                    </a>
+                </div>
+            </x-card>
+
+        </div>
     </div>
 
     @livewire('gigs-edit', ['gig' => $gig])
