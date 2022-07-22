@@ -3,6 +3,7 @@
 <div x-data="{ expanded: true }"
      {{ $attributes->class('flex-auto flex flex-col space-y-2 p-2 rounded-md border border-gray-300') }}>
 
+    @if (isset($title) | isset($subtitle))
     <div class="flex items-center justify-between">
 
         <div>
@@ -31,6 +32,7 @@
         </div>
 
     </div>
+    @endif
 
     <div x-show="expanded" x-collapse class="space-y-1">
 

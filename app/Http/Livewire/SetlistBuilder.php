@@ -12,6 +12,8 @@ class SetlistBuilder extends Component
     public $rep;
     public $searchTerm = '';
 
+    public $collapseSets = false;
+
     protected $listeners = [
         'refresh' => '$refresh',
         'addSet' => 'addSet',
@@ -29,16 +31,18 @@ class SetlistBuilder extends Component
         $this->emit('refresh');
     }
 
-    // public function updateSetOrder()
-    // {
-    //     foreach ($this->gig->sets as $set) {
-    //         if ($set['value'] != 0) {
-    //             Set::find($set['value'])->update([
-    //                 'position' => $set['order']
-    //             ]);
-    //         }
-    //     }
-    // }
+    public function updateSetOrder($sets)
+    {
+        foreach ($sets as $set) {
+            if ($set['value'] != 0) {
+                Set::find($set['value'])->update([
+                    'position' => $set['order']
+                ]);
+            }
+        }
+
+        $this->gig->load('sets');
+    }
     
     public function updateSongOrder($setsArray)
     {
