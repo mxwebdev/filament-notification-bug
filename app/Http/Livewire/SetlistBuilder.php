@@ -12,7 +12,7 @@ class SetlistBuilder extends Component
     public $rep;
     public $searchTerm = '';
 
-    public $collapseSets = false;
+    public $isCollapsed = false;
 
     protected $listeners = [
         'refresh' => '$refresh',
@@ -46,20 +46,35 @@ class SetlistBuilder extends Component
     
     public function updateSongOrder($setsArray)
     {
+        // dd($setsArray);
         foreach ($setsArray as $set) {
 
-            $song_ids = array_column($set['items'], 'value');
-            $positions = array();
-
-            for ($i=0; $i < count($song_ids); $i++) { 
-                $positions[$i] = ['position' => $i+1];
-            }
-
-            $pivotData = array_combine($song_ids, $positions);
-
             if ($set['value'] != 0) {
-                Set::find($set['value'])->songs()->sync($pivotData);
+
+                $song_ids = array_column($set['items'], 'value');
+
+                if ($this->isCollapsed && $song_ids != []) {
+                    $songCount = Set::find($set['value'])->songs()->count();
+
+                    Set::find($set['value'])->songs()->syncWithoutDetaching([$song_ids[0] => ['position' => $songCount]]);
+                }
+                elseif (!$this->isCollapsed) {
+                    $positions = array();
+
+                    for ($i=0; $i < count($song_ids); $i++) { 
+                        $positions[$i] = ['position' => $i+1];
+                    }
+
+                    $pivotData = array_combine($song_ids, $positions);
+        
+                    if ($set['value'] != 0) {
+                        Set::find($set['value'])->songs()->sync($pivotData);
+                    }
+                }
+
             }
+
+            
         }
 
         $this->gig->load('songs', 'sets');

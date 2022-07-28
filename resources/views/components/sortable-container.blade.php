@@ -1,7 +1,4 @@
-@props(['collapse' => true])
-
-<div x-data="{ expanded: true }"
-     {{ $attributes->class('flex-auto flex flex-col space-y-2 p-2 rounded-md border border-gray-300') }}>
+<div {{ $attributes->class('flex-auto flex flex-col space-y-2 p-2 rounded-md border border-gray-300') }}>
 
     @if (isset($title) | isset($subtitle))
     <div class="flex items-center justify-between">
@@ -21,20 +18,12 @@
         </div>
 
         <div>
-            @if ($collapse)
-            <a href="#" x-on:click="expanded = ! expanded">
-                <div>
-                    <x-icon.solid.chevron-down x-show="!expanded" class="h-5 w-5 text-gray-500 hover:text-gray-700" />
-                    <x-icon.solid.chevron-up x-show="expanded" class="h-5 w-5 text-gray-500 hover:text-gray-700" />
-                </div>
-            </a>
-            @endif
+            {{-- Add delete set button --}}
         </div>
-
     </div>
     @endif
 
-    <div x-show="expanded" x-collapse class="space-y-1">
+    <div class="space-y-1">
 
         {{ $slot }}
 

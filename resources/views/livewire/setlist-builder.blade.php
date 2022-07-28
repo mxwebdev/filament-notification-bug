@@ -18,26 +18,44 @@
         </div>
 
         {{-- Start: Repertoire --}}
-        <x-sortable-container :collapse="false" class="col-span-full">
+        <x-sortable-container class="col-span-full">
 
             <div wire:sortable-group.item-group="0"
                  wire:sortable-group.options="{ ghostClass: 'sortable-ghost', dragClass: 'sortable-drag'}"
                  class="h-64 overflow-y-scroll">
 
-                @foreach ($rep as $song)
+                @forelse ($rep as $song)
                 <x-sortable-card wire:key="song-{{ $song->id }}" wire:sortable-group.item="{{ $song->id }}">
                     <x-slot:title>{{ $song->title }}</x-slot:title>
                     <x-slot:artist>{{ $song->artist }}</x-slot:artist>
                 </x-sortable-card>
-                @endforeach
+                @empty
+                <div class="relative flex items-center justify-center h-full">
+                    <p class="text-sm py-4 font-medium text-gray-500">
+                        {{ __('There is no song matching your search...') }}
+                    </p>
+                </div>
+                @endforelse
 
             </div>
 
         </x-sortable-container>
         {{-- End: Repertoire --}}
 
-        <div class="col-span-full">
-            <h3 class="text-lg font-semibold text-gray-900 sm:text-xl">{{ __('Sets') }}</h3>
+        <div class="col-span-full flex justify-between">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 sm:text-xl">{{ __('Sets') }}</h3>
+                <p class="text-sm text-gray-500">{{ __('Songs') }}</p>
+            </div>
+
+            <x-button.secondary wire:click="$toggle('isCollapsed')"
+                                color="blue">
+                @if ($isCollapsed)
+                {{ __('Extend Sets') }}
+                @else
+                {{ __('Collapse Sets') }}
+                @endif
+            </x-button.secondary>
         </div>
 
         {{-- Start: Sets --}}
@@ -58,8 +76,17 @@
 
             <div wire:sortable-group.item-group="{{ $set->id }}">
 
+                @if($isCollapsed)
+                <div class="relative flex items-center justify-center h-full">
+                    <p class="text-sm py-4 font-medium text-gray-500">
+                        Dropzone 🪂
+                    </p>
+                </div>
+                @else
+
                 @forelse ($set->songs as $song)
-                <x-sortable-card wire:key="song-{{ $song->id }}" wire:sortable-group.item="{{ $song->id }}">
+                <x-sortable-card wire:key="song-{{ $song->id }}"
+                                 wire:sortable-group.item="{{ $song->id }}">
                     <x-slot:title>{{ $song->title }}</x-slot:title>
                     <x-slot:artist>{{ $song->artist }}</x-slot:artist>
                 </x-sortable-card>
@@ -70,6 +97,8 @@
                     </p>
                 </div>
                 @endforelse
+
+                @endif
 
             </div>
 

@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             $team->users()->save($user, ['role' => 'editor']);
         }
         
-        $gigs = Gig::factory(25)->for($team)->create(['created_by' => $user->id]);
+        $gigs = Gig::factory(2)->for($team)->create(['created_by' => $user->id]);
 
         $songs = Song::factory(10)->for($team)->create();
 

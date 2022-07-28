@@ -19,6 +19,9 @@
 
 <body class="h-full">
 
+    {{-- Remove in production --}}
+    <x-lean::console-log />
+
     <div>
         @livewire('navigation-menu')
 
