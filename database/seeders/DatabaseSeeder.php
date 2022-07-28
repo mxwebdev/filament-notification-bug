@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         
         $gigs = Gig::factory(2)->for($team)->create(['created_by' => $user->id]);
 
-        $songs = Song::factory(10)->for($team)->create();
+        $songs = Song::factory(50)->for($team)->create();
 
         foreach ($gigs as $gig) {
             // GigResponse::factory()->for($gig)->create([

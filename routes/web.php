@@ -36,6 +36,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         return view ('setlists.show', ['gig' => $gig]);
     })->name('setlists.show');
 
+    Route::get('/songs', function () {
+        return view ('songs.index');
+    })->name('songs.index');
+
     // Gig Responses
     Route::get('/gig-responses/accept/{gigResponse}', [GigResponseController::class, 'accept'])
         ->middleware(['signed'])

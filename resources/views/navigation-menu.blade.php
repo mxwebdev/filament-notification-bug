@@ -58,6 +58,11 @@
                                                    :active="request()->routeIs('gigs.*')">
                             {{ __('Gigs') }}
                         </x-jet-responsive-nav-link>
+                        <x-jet-responsive-nav-link href="{{ route('songs.index') }}"
+                                                   icon="icon.outline.music-note"
+                                                   :active="request()->routeIs('songs.*')">
+                            {{ __('Songs') }}
+                        </x-jet-responsive-nav-link>
                         @endunless
 
                     </nav>
@@ -95,6 +100,11 @@
                                     icon="icon.outline.ticket"
                                     :active="request()->routeIs('gigs.*')">
                         {{ __('Gigs') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('songs.index') }}"
+                                    icon="icon.outline.music-note"
+                                    :active="request()->routeIs('songs.*')">
+                        {{ __('Songs') }}
                     </x-jet-nav-link>
                     @endunless
 
