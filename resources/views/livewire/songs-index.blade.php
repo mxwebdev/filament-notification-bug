@@ -1,5 +1,5 @@
 <div>
-    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-t-lg">
         <table class="min-w-full divide-y divide-gray-300">
             <thead class="bg-gray-50">
                 <tr>
@@ -11,12 +11,16 @@
                         {{ __('Artist') }}
                     </th>
                     <th scope="col"
-                        class="hidden px-3 py-3 text-left text-sm font-semibold text-gray-900 sm:table-cell">
+                        class="hidden px-3 py-3 text-left text-sm font-semibold text-gray-900 lg:table-cell">
                         {{ __('Key') }}
                     </th>
                     <th scope="col"
                         class="hidden px-3 py-3 text-left text-sm font-semibold text-gray-900 lg:table-cell">
                         {{ __('BPM') }}
+                    </th>
+                    <th scope="col"
+                        class="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                        {{ __('Sheets') }}
                     </th>
                     <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
                         <span class="sr-only">{{ __('Edit') }}</span>
@@ -33,11 +37,20 @@
                     <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">
                         {{ $song->artist }}
                     </td>
-                    <td class="hidden whitespace-nowrap px-3 py-3 text-sm text-gray-500 sm:table-cell">
+                    <td class="hidden whitespace-nowrap px-3 py-3 text-sm text-gray-500 lg:table-cell">
                         {{ $song->song_key }}
                     </td>
                     <td class="hidden whitespace-nowrap px-3 py-3 text-sm text-gray-500 lg:table-cell">
                         {{ $song->bpm }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">
+                        <div class="flex overflow-hidden -space-x-1">
+                            @foreach ($song->files as $file)
+                            <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                                 src="{{ $file->owner->profile_photo_url }}"
+                                 alt="{{ $file->owner->name }}">
+                            @endforeach
+                        </div>
                     </td>
                     <td class="whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="#" wire:click="editSong({{ $song }})"
@@ -90,6 +103,9 @@
                     <h3 class="text-md font-medium text-gray-700">{{ __('Sheets') }}</h3>
                     <p class="mt-1 text-sm text-gray-500">Upload your sheets.</p>
                 </div>
+
+                {{-- @livewire('file-manager', ['song' => $song], key(now())) --}}
+                <livewire:file-manager key="{{ now() }}" :song="$editing" />
 
             </div>
 

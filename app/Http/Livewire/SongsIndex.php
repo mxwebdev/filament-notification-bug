@@ -14,7 +14,7 @@ class SongsIndex extends Component
     
     public $showSlideOver = false;
 
-    protected $listeners = ['openCreateSongSlideOver' => 'openSlideOver'];
+    protected $listeners = ['openCreateSongSlideOver' => 'createSong'];
 
     public function rules() {
         return [
@@ -31,19 +31,24 @@ class SongsIndex extends Component
     }
 
     public function openSlideOver()
-    {
+    {   
         $this->showSlideOver = true;
     }
 
     public function closeSlideOver()
     {
         $this->showSlideOver = false;
-        $this->editing = $this->makeBlankSong();
     }
 
     public function makeBlankSong()
     {
         return Song::make();
+    }
+
+    public function createSong()
+    {
+        $this->editing = $this->makeBlankSong();
+        $this->openSlideOver();
     }
 
     public function editSong(Song $song)
@@ -65,6 +70,7 @@ class SongsIndex extends Component
     public function render()
     {
         $songs = auth()->user()->currentTeam->songs()
+            ->with('files')
             ->orderBy('title')
             ->paginate(25);
 
