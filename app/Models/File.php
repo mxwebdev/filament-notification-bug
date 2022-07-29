@@ -8,6 +8,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\App;
 
 class File extends Model implements HasMedia
 {
@@ -18,8 +19,11 @@ class File extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
+        $disk = App::environment('production') ? 's3' : 'public';
+
         $this->addMediaCollection('sheets')
             ->singleFile()
+            ->useDisk($disk)
             ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']);
     }
 
