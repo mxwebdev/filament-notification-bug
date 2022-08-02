@@ -18,18 +18,6 @@
         </x-page-header.simple>
     </x-slot:header>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-flow-col-dense">
-        <div class="space-y-6 lg:col-start-1 lg:col-span-2">
+    @livewire('songs-index')
 
-            <!-- Gigs -->
-            <x-card label="gigs-title">
-                <div class="divide-y divide-gray-200">
-                    <div class="bg-white shadow overflow-hidden">
-                        @livewire('songs-index')
-                    </div>
-                </div>
-            </x-card>
-
-        </div>
-    </div>
 </x-app-layout>

@@ -2,17 +2,24 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Traits\WithSorting;
 use App\Models\Song;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class SongsIndex extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSorting;
 
     public Song $editing;
     
     public $showSlideOver = false;
+
+    public $filters = [
+        'search' => '',
+    ];
+
+    protected $queryString = ['sorts'];
 
     protected $listeners = ['openCreateSongSlideOver' => 'createSong'];
 
@@ -67,15 +74,25 @@ class SongsIndex extends Component
         $this->closeSlideOver();
     }
 
+    public function getRowsQueryProperty()
+    {
+        $query = Song::query()
+            ->where('team_id', auth()->user()->currentTeam->id)
+            ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%'))
+            ->with('files');
+
+        return $this->applySorting($query);
+    }
+
+    public function getRowsProperty()
+    {
+        return $this->rowsQuery->paginate(25);
+    }
+
     public function render()
     {
-        $songs = auth()->user()->currentTeam->songs()
-            ->with('files')
-            ->orderBy('title')
-            ->paginate(25);
-
         return view('livewire.songs-index', [
-            'songs' => $songs,
+            'songs' => $this->rows,
         ]);
     }
 }

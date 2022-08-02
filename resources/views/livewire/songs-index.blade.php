@@ -1,49 +1,61 @@
 <div>
-    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-t-lg">
+    <div class="flex py-4">
+        <x-input.text wire:model="filters.search" class="w-64" placeholder="{{ __('Search songs...') }}" />
+    </div>
+
+    <div class="overflow-hidden shadow bg-white ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-t-lg">
         <table class="min-w-full divide-y divide-gray-300">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                    <x-table.heading sortable
+                                     :direction="$sorts['title'] ?? null"
+                                     wire:click="sortBy('title')"
+                                     scope="col"
+                                     class="py-3 pl-4 pr-3 sm:pl-6">
                         {{ __('Title') }}
-                    </th>
-                    <th scope="col"
-                        class="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                    </x-table.heading>
+                    <x-table.heading sortable
+                                     :direction="$sorts['artist'] ?? null"
+                                     wire:click="sortBy('artist')"
+                                     scope="col"
+                                     class="px-3 py-3">
                         {{ __('Artist') }}
-                    </th>
-                    <th scope="col"
-                        class="hidden px-3 py-3 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                    </x-table.heading>
+                    <x-table.heading scope="col"
+                                     class="hidden px-3 py-3 lg:table-cell">
                         {{ __('Key') }}
-                    </th>
-                    <th scope="col"
-                        class="hidden px-3 py-3 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                    </x-table.heading>
+                    <x-table.heading scope="col"
+                                     class="hidden px-3 py-3 lg:table-cell">
                         {{ __('BPM') }}
-                    </th>
-                    <th scope="col"
-                        class="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                    </x-table.heading>
+                    <x-table.heading scope="col"
+                                     class="px-3 py-3">
                         {{ __('Sheets') }}
-                    </th>
-                    <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
+                    </x-table.heading>
+                    <x-table.heading scope="col"
+                                     class="relative py-3 pl-3 pr-4 sm:pr-6">
                         <span class="sr-only">{{ __('Edit') }}</span>
-                    </th>
+                    </x-table.heading>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
 
                 @foreach ($songs as $song)
                 <tr>
-                    <td class="whitespace-nowrap py-3 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <x-table.cell class="py-3 pl-4 pr-3 font-medium text-gray-900 sm:pl-6">
                         {{ $song->title }}
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">
+                    </x-table.cell>
+                    <x-table.cell class="px-3 py-3">
                         {{ $song->artist }}
-                    </td>
-                    <td class="hidden whitespace-nowrap px-3 py-3 text-sm text-gray-500 lg:table-cell">
+                    </x-table.cell>
+                    <x-table.cell class="hidden px-3 py-3 lg:table-cell">
                         {{ $song->song_key }}
-                    </td>
-                    <td class="hidden whitespace-nowrap px-3 py-3 text-sm text-gray-500 lg:table-cell">
+                    </x-table.cell>
+                    <x-table.cell class="hidden px-3 py-3 lg:table-cell">
                         {{ $song->bpm }}
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-3 text-sm text-gray-500">
+                    </x-table.cell>
+                    <x-table.cell class="px-3 py-3">
                         <div class="flex overflow-hidden -space-x-1">
                             @foreach ($song->files as $file)
                             <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white"
@@ -51,21 +63,22 @@
                                  alt="{{ $file->owner->name }}">
                             @endforeach
                         </div>
-                    </td>
-                    <td class="whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    </x-table.cell>
+                    <x-table.cell class="py-3 pl-3 pr-4 text-right font-medium sm:pr-6">
                         <a href="#" wire:click="editSong({{ $song }})"
                            class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}<span
                                   class="sr-only">,
                                 {{ $song->title }}</span></a>
-                    </td>
+                    </x-table.cell>
                 </tr>
                 @endforeach
 
             </tbody>
         </table>
-    </div>
 
-    {{ $songs->links('pagination') }}
+        {{ $songs->links('pagination') }}
+
+    </div>
 
     <form wire:submit.prevent="save">
         <x-modal.slideover>
@@ -108,10 +121,8 @@
                 <livewire:file-manager key="{{ now() }}" :song="$editing" />
 
             </div>
-
             <x-slot:footer>
-                <x-button.secondary wire:click="closeSlideOver" color="gray">{{ __('Cancel') }}
-                </x-button.secondary>
+                <x-button.secondary wire:click="closeSlideOver" color="gray">{{ __('Cancel') }}</x-button.secondary>
                 <x-button.primary type="submit" class="ml-4">{{ __('Save') }}</x-button.primary>
             </x-slot:footer>
         </x-modal.slideover>
