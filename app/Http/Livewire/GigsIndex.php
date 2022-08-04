@@ -18,6 +18,12 @@ class GigsIndex extends Component
 
     public $showSlideOver = false;
 
+    public $filters = [
+        'search' => '',
+        'date_min' => null,
+        'date_max' => null,
+    ];
+
     protected $listeners = ['openCreateGigSlideOver' => 'openSlideOver'];
 
     public function rules() {
@@ -33,6 +39,11 @@ class GigsIndex extends Component
     public function mount()
     {
         $this->editing = $this->makeBlankGig();
+
+        $this->filters['date_min'] = Carbon::now()->format('Y-m-d');
+
+        $lastGig = Gig::orderBy('gig_start', 'desc')->first();
+        $this->filters['date_max'] = $lastGig->gig_start->format('Y-m-d');
     }
 
     public function openSlideOver()
@@ -95,21 +106,30 @@ class GigsIndex extends Component
             'message' => __('Gig saved!')
         ]);
     }
+
+    public function getRowsQueryProperty()
+    {
+        $query = Gig::query()
+            ->where('team_id', auth()->user()->currentTeam->id)
+            ->when($this->filters['search'], fn($query, $search) => $query->where('name', 'like', '%'.$search.'%')
+                                                                        ->orWhere('location', 'like', '%'.$search.'%'))
+            ->when($this->filters['date_min'], fn($query, $date) => $query->where('gig_start', '>=', Carbon::parse($date)))
+            ->when($this->filters['date_max'], fn($query, $date) => $query->where('gig_start', '<=', Carbon::parse($date)))
+            ->orderBy('gig_start')
+            ->with('creator', 'gigResponses');
+
+        return $query;
+    }
+
+    public function getRowsProperty()
+    {
+        return $this->rowsQuery->paginate(10);
+    }
     
     public function render()
-    {
-        $gigs = auth()->user()->currentTeam->gigs()
-            ->whereDate('gig_start', '>=', Carbon::now())
-            ->orderBy('gig_start')
-            ->with('creator', 'gigResponses')
-            ->paginate(10);
-
-        $this->upcomingGigsCount = auth()->user()->currentTeam->gigs()
-            ->whereDate('gig_start', '>=', Carbon::now())
-            ->count();
-        
+    {   
         return view('livewire.gigs-index', [
-            'gigs' => $gigs,
+            'gigs' => $this->rows,
         ]);
     }
 }

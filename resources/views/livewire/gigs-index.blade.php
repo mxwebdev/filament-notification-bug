@@ -1,106 +1,119 @@
 <div>
-    <ul role="list" class="divide-y divide-gray-200">
 
-        <li>
-            <a href="#"
-               class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-3 hover:text-gray-700 sm:rounded-b-lg">
-                {{ __('...') }}
-            </a>
-        </li>
+    <div class="grid grid-cols-2 items-center pb-4">
+        <div class="flex space-x-4 col-span-2 lg:col-span-1">
+            <x-input.text wire:model="filters.search" placeholder="{{ __('Search gigs...') }}" />
+            <x-dropdown title="{{ __('Filter') }}" icon="icon.outline.filter">
+                <x-dropdown.item>
+                    <x-input.group label="{{ __('From') }}" class="w-full">
+                        <x-input.text type="date" wire:model.lazy="filters.date_min" />
+                    </x-input.group>
+                </x-dropdown.item>
+                <x-dropdown.item>
+                    <x-input.group label="{{ __('To') }}" class="w-full">
+                        <x-input.text type="date" wire:model.lazy="filters.date_max" />
+                    </x-input.group>
+                </x-dropdown.item>
+            </x-dropdown>
+        </div>
 
-        @forelse ($gigs as $gig)
+        <p class="text-sm text-gray-500 col-span-2 lg:col-span-1 py-2 lg:py-0 lg:text-right">
+            You have
+            <span class="font-medium">{{ $gigs->count() }} </span>
+            gigs scheduled between
+            <span class="font-medium">{{ Carbon\Carbon::parse($filters['date_min'])->toFormattedDateString() }}</span>
+            and
+            <span class="font-medium">{{ Carbon\Carbon::parse($filters['date_max'])->toFormattedDateString() }}</span>.
+        </p>
+    </div>
 
-        <li>
-            <a href="{{ route('gigs.show', $gig) }}" class="block hover:bg-gray-50">
-                <div class="px-4 py-4 flex items-center sm:px-6">
-                    <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                        <div class="truncate">
-                            <div class="flex text-sm">
-                                <p class="font-medium text-blue-700 truncate">{{ $gig->name }}</p>
-                                {{-- <p class="ml-1.5 flex-shrink-0 font-normal text-gray-400">{{ __('created by') }}
-                                {{ $gig->creator->name }}</p> --}}
-                                <x-badge.xs class="ml-2" color="{{ App\Models\Gig::STATUS_COLOR[$gig->status] }}">
-                                    {{ App\Models\Gig::STATUS[$gig->status] }}</x-badge.xs>
-                            </div>
-                            <div class="mt-2 flex">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <!-- Heroicon name: solid/calendar -->
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                         xmlns="http://www.w3.org/2000/svg"
-                                         viewBox="0 0 20 20" fill="currentColor"
-                                         aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <p>
-                                        <time
-                                              datetime="{{ $gig->gig_start }}">{{ $gig->gig_start->toFormattedDateString() }}</time>
-                                    </p>
+    <div class="bg-white shadow overflow-hidden md:rounded-t-lg">
+        <ul role="list" class="divide-y divide-gray-200">
+
+            @forelse ($gigs as $gig)
+            <li>
+                <a href="{{ route('gigs.show', $gig) }}" class="block hover:bg-gray-50">
+                    <div class="px-4 py-4 flex items-center sm:px-6">
+                        <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div class="truncate">
+                                <div class="flex text-sm">
+                                    <p class="font-medium text-blue-700 truncate">{{ $gig->name }}</p>
+                                    {{-- <p class="ml-1.5 flex-shrink-0 font-normal text-gray-400">{{ __('created by') }}
+                                    {{ $gig->creator->name }}</p> --}}
+                                    <x-badge.xs class="ml-2" color="{{ App\Models\Gig::STATUS_COLOR[$gig->status] }}">
+                                        {{ App\Models\Gig::STATUS[$gig->status] }}</x-badge.xs>
                                 </div>
-
-                                <div class="flex ml-4 items-center text-sm text-gray-500">
-                                    <!-- Heroicon name: solid/location-marker -->
-                                    <svg class="flex-shrink-0 mr-1 h-5 w-5 text-gray-400"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                              clip-rule="evenodd" />
-                                    </svg>
-                                    <p>{{ $gig->location }}</p>
+                                <div class="mt-2 flex">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <!-- Heroicon name: solid/calendar -->
+                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 20 20" fill="currentColor"
+                                             aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                        <p>
+                                            <time
+                                                  datetime="{{ $gig->gig_start }}">{{ $gig->gig_start->toFormattedDateString() }}</time>
+                                        </p>
+                                    </div>
+                                    <div class="flex ml-4 items-center text-sm text-gray-500">
+                                        <!-- Heroicon name: solid/location-marker -->
+                                        <svg class="flex-shrink-0 mr-1 h-5 w-5 text-gray-400"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                             fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                                  clip-rule="evenodd" />
+                                        </svg>
+                                        <p>{{ $gig->location }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
+                                <div class="flex overflow-hidden -space-x-1">
+                                    @foreach ($gig->gigResponses as $gigResponse)
+                                    <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                                         src="{{ $gigResponse->user->profile_photo_url }}"
+                                         alt="{{ $gigResponse->user->name }}">
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
-                            <div class="flex overflow-hidden -space-x-1">
-                                @foreach ($gig->gigResponses as $gigResponse)
-                                <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white"
-                                     src="{{ $gigResponse->user->profile_photo_url }}"
-                                     alt="{{ $gigResponse->user->name }}">
-                                @endforeach
-                            </div>
+                        <div class="ml-5 flex-shrink-0">
+                            <!-- Heroicon name: solid/chevron-right -->
+                            <svg class="h-5 w-5 text-gray-400"
+                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                 fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                      clip-rule="evenodd" />
+                            </svg>
                         </div>
                     </div>
-                    <div class="ml-5 flex-shrink-0">
-                        <!-- Heroicon name: solid/chevron-right -->
-                        <svg class="h-5 w-5 text-gray-400"
-                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                  clip-rule="evenodd" />
-                        </svg>
-                    </div>
+                </a>
+            </li>
+            @empty
+            <li>
+                <div class="px-4 py-4 sm:px-6 text-center">
+                    <p>
+                        <span class="text-sm font-medium text-gray-700">
+                            {{ __('No gigs found.') }}
+                        </span>
+                        <span class="text-sm text-gray-500">
+                            {{ __('Do you want to') }}
+                            <a wire:click="openSlideOver" href="#"
+                               class="font-medium text-blue-600 hover:text-blue-700">{{ __('add a gig') }}</a>?
+                        </span>
+                    </p>
                 </div>
-            </a>
-        </li>
-
-        @empty
-
-        <li>
-            <div class="px-4 py-4 sm:px-6 text-center">
-                <p>
-                    <span class="text-sm font-medium text-gray-700">
-                        {{ __('Nothing scheduled yet.') }}
-                    </span>
-                    <span class="text-sm text-gray-500">
-                        {{ __('Get started and') }}
-
-                        <a wire:click="openSlideOver" href="#"
-                           class="font-medium text-blue-600 hover:text-blue-700">{{ __('add your first gig') }}</a>
-                        .
-                    </span>
-                </p>
-
-            </div>
-        </li>
-
-        @endforelse
-
-    </ul>
-
-    {{ $gigs->links('pagination') }}
+            </li>
+            @endforelse
+        </ul>
+        {{ $gigs->links('pagination') }}
+    </div>
 
     <form wire:submit.prevent="save">
         <x-modal.slideover>

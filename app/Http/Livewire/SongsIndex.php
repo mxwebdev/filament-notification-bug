@@ -78,7 +78,8 @@ class SongsIndex extends Component
     {
         $query = Song::query()
             ->where('team_id', auth()->user()->currentTeam->id)
-            ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%'))
+            ->when($this->filters['search'], fn($query, $search) => $query->where('title', 'like', '%'.$search.'%')
+                                                                        ->orWhere('artist', 'like', '%'.$search.'%'))
             ->with('files');
 
         return $this->applySorting($query);

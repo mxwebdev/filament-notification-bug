@@ -1,5 +1,5 @@
 <div>
-    <div class="flex py-4">
+    <div class="flex pb-4">
         <x-input.text wire:model="filters.search" class="w-64" placeholder="{{ __('Search songs...') }}" />
     </div>
 
