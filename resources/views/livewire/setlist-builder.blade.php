@@ -87,7 +87,8 @@
                 @forelse ($set->songs as $song)
                 <x-sortable-card wire:key="song-{{ $song->id }}"
                                  wire:sortable-group.item="{{ $song->id }}">
-                    <x-slot:title>{{ $song->title }}</x-slot:title>
+                    <x-slot:title>{{ $song->title }} Placeholder: {{ $song->placeholder()->exists() }} UserFile:
+                        {{ $song->userFile()->exists() }}</x-slot:title>
                     <x-slot:artist>{{ $song->artist }}</x-slot:artist>
                 </x-sortable-card>
                 @empty

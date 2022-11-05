@@ -39,7 +39,7 @@ class FileManager extends Component
             'owner_id' => auth()->user()->id,
         ]);
 
-        $file->addMedia($this->uploadedFile->getRealPath())->toMediaCollection('sheets');
+        $file->addMediaFromDisk($this->uploadedFile->getRealPath(), 's3')->toMediaCollection('sheets');
 
         foreach ($this->song->files as $detachFile) {
             $detachFile->users()->detach(auth()->id());

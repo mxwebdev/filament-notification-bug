@@ -32,6 +32,13 @@
 
             <x-slot:action>
                 <div class="flex space-x-4">
+                    <x-button.primary-leading-icon onclick="window.livewire.emit('openExportSetlistSlideOver')"
+
+                                                   icon="icon.outline.download"
+                                                   color="blue">
+                        {{ __('Export') }}
+                    </x-button.primary-leading-icon>
+
                     <x-button.primary-leading-icon onclick="window.livewire.emit('addSet')"
                                                    icon="icon.solid.plus-sm"
                                                    color="blue">
@@ -44,5 +51,6 @@
     </x-slot:header>
 
     @livewire('setlist-builder', ['gig' => $gig])
+    @livewire('export-setlist', ["gig" => $gig])
 
 </x-app-layout>

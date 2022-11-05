@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\App;
 
 class File extends Model implements HasMedia
 {
@@ -19,7 +19,8 @@ class File extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $disk = App::environment('production') ? 's3' : 'public';
+        //$disk = App::environment('production') ? 's3' : 'public';
+        $disk = 's3';
 
         $this->addMediaCollection('sheets')
             ->singleFile()
