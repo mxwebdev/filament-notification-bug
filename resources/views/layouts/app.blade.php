@@ -20,42 +20,11 @@
 
 <body class="h-full">
 
-    {{-- Remove in production --}}
-    <x-lean::console-log />
-
-    <div>
-        @livewire('navigation-menu')
-
-        <div class="md:pl-64 flex flex-col">
-
-            <x-jet-banner />
-
-            @livewire('sticky-header')
-
-            <main class="flex-1">
-                <div class="py-8">
-
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                        <!-- Page Header -->
-                        @if (isset($header))
-                        {{ $header }}
-                        @endif
-                    </div>
-                    <div class="mt-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                        <!-- Page Content -->
-                        {{ $slot }}
-                    </div>
-                </div>
-            </main>
-
-        </div>
-    </div>
-
-    @stack('modals')
+    {{ $slot }}
 
     @livewireScripts
-    @stack('scripts')
 
+    @livewire('notifications')
 </body>
 
 </html>
