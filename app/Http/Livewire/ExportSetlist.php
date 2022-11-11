@@ -93,7 +93,7 @@ class ExportSetlist extends Component
 
     public function generateTitlePage()
     {
-        if (!$this->gig->titlePage->exists()) {
+        if (!$this->gig->titlePage()->exists()) {
             $pdfData = ['title' => $this->gig->name];
             $pdfContent = PDF::loadView('pdf.title-page', $pdfData)->output();
 
